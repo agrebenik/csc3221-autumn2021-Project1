@@ -1,0 +1,22 @@
+{
+  "name": "csc3221-autumn2021-project1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agrebenik/csc3221-autumn2021-Project1.git"
+  },
+  "author": "Andrey Grebenik",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/agrebenik/csc3221-autumn2021-Project1/issues"
+  },
+  "homepage": "https://github.com/agrebenik/csc3221-autumn2021-Project1#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
