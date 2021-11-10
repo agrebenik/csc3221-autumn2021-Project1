@@ -3,12 +3,13 @@ const app = express();
 
 let { people } = require('./data');
 
+// define our port
 const PORT = 6969;
 
+// inject middleware
 app.use(express.static('./methods-public'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
-
 
 app.get('/api/people', (req, res) => {
     let jsonToReturn = {
@@ -16,6 +17,26 @@ app.get('/api/people', (req, res) => {
         data: people
     }
     res.status(200).json(jsonToReturn);
+});
+
+app.get('/api/people/:guid', (req, res) => {
+    const { guid } = req.params;
+
+    if (!people.find((person) => {person.id === Number(guid);})) {
+        return res.status(400).json({
+            success: false,
+            msg: `No person with id "${guid}" found.`
+        });
+    }
+
+    const newPeople = people.filter((person) => {
+        return person.id === Number(guid);
+    });
+    
+    res.status(200).json({
+        success: true,
+        data: newPeople
+    });
 });
 
 app.post('/api/people', (req, res) => {
@@ -36,10 +57,10 @@ app.put('/api/people/:guid', (req, res) => {
     const { guid } = req.params;
     const { name } = req.body;
     
-    if (!people.find((person) => {person.id === Number(id);})) {
+    if (!people.find((person) => {person.id === Number(guid);})) {
         return res.status(400).json({
             success: false,
-            msg: `no person with id "${guid}" found.`
+            msg: `No person with id "${guid}" found.`
         });
     }
     
@@ -56,6 +77,10 @@ app.put('/api/people/:guid', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+app.delete('/api/people/:guid', (req, res) => {
 
+});
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT} for incoming requests`);
 });
