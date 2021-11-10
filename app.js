@@ -22,17 +22,17 @@ app.get('/api/people', (req, res) => {
 app.get('/api/people/:guid', (req, res) => {
     const { guid } = req.params;
 
-    if (!people.find((person) => {person.id === Number(guid);})) {
+    const newPeople = people.filter((person) => {
+        return person.id === Number(guid);
+    });
+
+    if (newPeople.length <= 0) {
         return res.status(400).json({
             success: false,
             msg: `No person with id "${guid}" found.`
         });
     }
 
-    const newPeople = people.filter((person) => {
-        return person.id === Number(guid);
-    });
-    
     res.status(200).json({
         success: true,
         data: newPeople
@@ -57,7 +57,7 @@ app.put('/api/people/:guid', (req, res) => {
     const { guid } = req.params;
     const { name } = req.body;
     
-    if (!people.find((person) => {person.id === Number(guid);})) {
+    if (!people.find((person) => {return person.id === Number(guid)})) {
         return res.status(400).json({
             success: false,
             msg: `No person with id "${guid}" found.`
